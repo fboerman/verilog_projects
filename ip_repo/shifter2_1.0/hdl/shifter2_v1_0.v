@@ -84,7 +84,7 @@
                         if(s00_axis_tvalid)
                         begin
                             reg_state <= SLAVE_READ;
-                            tready_out <= 1'b1;
+                            //tready_out <= 1'b1;
                         end
                     end
                     SLAVE_READ:
@@ -95,6 +95,7 @@
                         begin
                             tdata_out <= s00_axis_tdata >> 1;
                             tvalid_out <= 1'b1;
+                            tready_out <= 1'b1;
                             // if ready is already high then the master can
                             // already write this same cycle. then stay in
                             // this state, otherwise go to state of
@@ -105,6 +106,7 @@
                             begin
                                 reg_state = IDLE;
                                 tlast_out <= 1'b1;
+                                tready_out <= 1'b0;
                             end
                             else
                             begin
